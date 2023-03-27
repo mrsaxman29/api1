@@ -1,0 +1,9 @@
+html body{
+    padding: 0;
+    margin: 0;
+}
+
+#data{
+    background-color: rgb(208, 201, 215);
+    height: 400px;
+}
