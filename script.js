@@ -49,3 +49,17 @@ var data = {
 	//input : [[44,43,44],[90,83,82],"N","N","N"]
 }
 
+// SPACE TRADERS
+
+
+function space_trade(){     //https://api.spacetraders.io/game/leaderboard/net-worth
+    fetch("https://api.spacetraders.io/game/leaderboard/net-worth")
+    .then((res)=> res.json())
+    .then((data)=>{
+        console.log(data);
+    });
+}
+
+
+const sb = document.getElementById("space_button");
+sb.onclick=space_trade;
