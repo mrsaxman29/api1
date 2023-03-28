@@ -3,7 +3,30 @@ html body{
     margin: 0;
 }
 
+.wrapper{
+    display: flex;
+}
+
+.color_block{
+    flex: 1;
+    height: 400px;
+    background-color: pink;
+
+}
+
 #data{
     background-color: rgb(208, 201, 215);
-    height: 400px;
+}
+#data1{
+    background-color: rgb(31, 24, 37);
+}
+#data2{
+    background-color: rgb(94, 0, 188);
+}
+#data3{
+    background-color: rgb(16, 93, 87);
+}
+
+#button{
+    font-size: x-large;
 }
