@@ -27,6 +27,32 @@ const get_data = function(){
 });
 }
 
+/*
+
+The palette consists of a light color, a dark color, main brand color and two highlight colors. 
+The main color is in the center of the palette and has the largest impact on the overall look.
+
+Light shades
+Use this color as the background for your dark-on-light designs, or the text color of an inverted design.
+
+
+Light accent
+Accent colors can be used to bring attention to design elements by contrasting with the rest of the palette.
+
+
+Main brand color
+This color should be eye-catching but not harsh. It can be liberally applied to your layout as its main identity.
+
+
+Dark accent
+Another accent color to consider. Not all colors have to be used - sometimes a simple color scheme works best.
+
+
+Dark shades
+Use as the text color for dark-on-light designs, or as the background for inverted designs.
+
+*/
+
 const button = document.getElementById("button");
 button.onclick = get_data;
 
@@ -49,12 +75,31 @@ var data = {
 	//input : [[44,43,44],[90,83,82],"N","N","N"]
 }
 
+
+
+
+
 // SPACE TRADERS
 
 
+
+
+
 function space_trade(){     //https://api.spacetraders.io/game/leaderboard/net-worth
-    fetch("https://api.spacetraders.io/game/leaderboard/net-worth")
+    fetch("https://api.spacetraders.io/game/status")
     .then((res)=> res.json())
+    .then((data)=>{
+        console.log(data);
+    });
+}
+
+function new_user(un){ 
+    console.log(un);   
+    fetch(`https://api.spacetraders.io/users/${un}/claim`, {method: "POST"})
+    .then((res)=> {
+        console.log(res);
+        return res.json();
+        })
     .then((data)=>{
         console.log(data);
     });
@@ -63,3 +108,25 @@ function space_trade(){     //https://api.spacetraders.io/game/leaderboard/net-w
 
 const sb = document.getElementById("space_button");
 sb.onclick=space_trade;
+
+const user_name = document.getElementById("username");
+
+
+
+const input_button = document.getElementById("submit");
+input_button.addEventListener('click', (e)=>{
+    if(user_name.value==""){
+        console.log('NOTHING');
+        return;}
+    e.preventDefault();
+    console.log(e.target);
+    console.log(user_name.value);
+    new_user(user_name.value);
+
+
+    user_name.value="";
+    
+
+
+});
+
