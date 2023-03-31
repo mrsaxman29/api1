@@ -34,3 +34,8 @@ html body{
 #space_button{
     font-size: x-large;
 }
+
+#token{
+    height: 100px;
+    background-color: deepskyblue;
+}

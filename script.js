@@ -102,6 +102,7 @@ function new_user(un){
         })
     .then((data)=>{
         console.log(data);
+        token_div.innerText=data.token;
     });
 }
 
@@ -117,7 +118,7 @@ async function check_account(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
 }
 //api.spacetraders.io/types/loans
 async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
-    const credentials = `Bearer bbd8ceea-4436-4b90-9fc2-dadab58e5551`;
+    const credentials = `Bearer ${tk}`;
     console.log(credentials);
     const response = await fetch("https://api.spacetraders.io/types/loans", {
         headers: {
@@ -130,7 +131,10 @@ async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
 }
 
 const loanb = document.getElementById("loans");
-loanb.onclick=check_loans;
+loanb.addEventListener("click", ()=>{
+    console.log(token_div.innerText);
+    check_loans(token_div.innerText);
+});
 
 const sb = document.getElementById("space_button");
 sb.onclick=space_trade;
@@ -142,7 +146,7 @@ const user_name = document.getElementById("username");
 const check_btn = document.getElementById("check");
 check_btn.addEventListener("click", check_account);
 
-
+const token_div = document.getElementById("token");
 
 const input_button = document.getElementById("submit");
 input_button.addEventListener('click', (e)=>{
@@ -153,11 +157,9 @@ input_button.addEventListener('click', (e)=>{
     console.log(e.target);
     console.log(user_name.value);
     new_user(user_name.value);
-
-
     user_name.value="";
     
-
+    
 
 });
 
