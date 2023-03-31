@@ -111,13 +111,26 @@ async function check_account(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
             'Authorization': "Bearer bbd8ceea-4436-4b90-9fc2-dadab58e5551",
         }
 })
-    console.log(response)
-
+    console.log(response);
     stuff = await response.json();
     console.log(stuff);
-
-    
 }
+//api.spacetraders.io/types/loans
+async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
+    const credentials = `Bearer bbd8ceea-4436-4b90-9fc2-dadab58e5551`;
+    console.log(credentials);
+    const response = await fetch("https://api.spacetraders.io/types/loans", {
+        headers: {
+            'Authorization': credentials,
+        }
+    });
+    console.log(response);
+    stuff = await response.json();
+    console.log(stuff);
+}
+
+const loanb = document.getElementById("loans");
+loanb.onclick=check_loans;
 
 const sb = document.getElementById("space_button");
 sb.onclick=space_trade;
