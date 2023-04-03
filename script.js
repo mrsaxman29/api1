@@ -130,6 +130,8 @@ async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     console.log(stuff);
 }
 
+
+
 const loanb = document.getElementById("loans");
 loanb.addEventListener("click", ()=>{
     console.log(token_div.innerText);
@@ -140,15 +142,26 @@ const sb = document.getElementById("space_button");
 sb.onclick=space_trade;
 
 const user_name = document.getElementById("username");
+const login_field = document.getElementById("username_old");
+const login_btn = document.getElementById("login");
 
+login_btn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    token_div.innerText = login_field.value;
+    check_account(login_field.value);
+    login_field.value="";
+    
 
+})
 
 const check_btn = document.getElementById("check");
 check_btn.addEventListener("click", check_account);
 
-const token_div = document.getElementById("token");
 
+
+const token_div = document.getElementById("token");
 const input_button = document.getElementById("submit");
+
 input_button.addEventListener('click', (e)=>{
     if(user_name.value==""){
         console.log('NOTHING');
@@ -158,8 +171,5 @@ input_button.addEventListener('click', (e)=>{
     console.log(user_name.value);
     new_user(user_name.value);
     user_name.value="";
-    
-    
-
 });
 
