@@ -106,6 +106,8 @@ function new_user(un){
     });
 }
 
+
+// used for login
 async function check_account(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     const response = await fetch('https://api.spacetraders.io/my/account', {
         headers: {
@@ -135,7 +137,7 @@ async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
 const loanb = document.getElementById("loans");
 loanb.addEventListener("click", ()=>{
     console.log(token_div.innerText);
-    check_loans(token_div.innerText);
+    check_loans();
 });
 
 const sb = document.getElementById("space_button");
