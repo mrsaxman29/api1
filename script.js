@@ -3,27 +3,23 @@ const get_data = function(){
 
     fetch("http://colormind.io/api/", {
     method:"POST",
-    body: JSON.stringify(data)
+    body: JSON.stringify({ model: 'default' })
 })
   .then((response) => response.json())
-  .then((data) => {console.log(data.result[0]);
-
-
-                    data.result.forEach((color, index)=>{
-
-                        var color_str = "rgb(";
-                    color.forEach((element, index) => {
-                    color_str += element.toString();
-                    if (index<2){
-                        color_str += ", ";
-                        console.log(index);
-                        };
-                    });
-                    console.log(color_str);
-                    div_list[index].style.backgroundColor=color_str;
-
-                    })
-
+  .then((data) => {
+    console.log(data.result[0]);
+    data.result.forEach((color, index)=>{
+        var color_str = "rgb(";
+        color.forEach((element, index) => {
+            color_str += element.toString();
+            if (index<2){
+                color_str += ", ";
+                console.log(index);
+            };
+        });
+    console.log(color_str);
+    div_list[index].style.backgroundColor=color_str;
+    })
 });
 }
 
@@ -107,6 +103,8 @@ function new_user(un){
 }
 
 
+
+
 // used for login
 async function check_account(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     const response = await fetch('https://api.spacetraders.io/my/account', {
@@ -132,12 +130,12 @@ async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     console.log(stuff);
 }
 
-
+var login_token = '';
 
 const loanb = document.getElementById("loans");
 loanb.addEventListener("click", ()=>{
     console.log(token_div.innerText);
-    check_loans();
+    check_loans(login_token);
 });
 
 const sb = document.getElementById("space_button");
@@ -149,8 +147,9 @@ const login_btn = document.getElementById("login");
 
 login_btn.addEventListener("click", (e)=>{
     e.preventDefault();
-    token_div.innerText = login_field.value;
+    token_div.innerText = `YOUR TOKEN IS: ${login_field.value}`;
     check_account(login_field.value);
+    login_token = login_field.value;
     login_field.value="";
     
 
