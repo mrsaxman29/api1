@@ -102,7 +102,8 @@ function new_user(un){
     });
 }
 
-
+const ui_logged_in = document.getElementById("ui_wrapper_logged_in");
+const ui_wrapper = document.getElementById("ui_wrapper");
 
 
 // used for login
@@ -115,6 +116,13 @@ async function check_account(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     console.log(response);
     stuff = await response.json();
     console.log(stuff);
+    if (stuff){
+        ui_wrapper.classList.remove("active");
+        ui_wrapper.classList.add("inactive");
+        ui_logged_in.classList.remove("inactive");
+        ui_logged_in.classList.add("active");
+    
+    }
 }
 //api.spacetraders.io/types/loans
 async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
@@ -128,6 +136,9 @@ async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     console.log(response);
     stuff = await response.json();
     console.log(stuff);
+    var new_div = document.createElement("div");
+    new_div.innerHTML = Object.entries( stuff.loans[0]);
+    token_div.appendChild(new_div);
 }
 
 var login_token = '';
