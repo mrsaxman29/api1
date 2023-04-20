@@ -93,6 +93,22 @@ var data = {
 //token: b1e819b4-1fc6-48e5-9ca7-e7cb741f0bae    un: playerzero
 
 
+function logObject(obj) {
+    if (obj instanceof Object) {
+      Object.entries(obj).forEach(([key, value]) => {
+        console.log(`${key}: ${value}`);
+        logObject(value);
+      });
+    } else if (Array.isArray(obj)) {
+      obj.forEach((value, index) => {
+        console.log(`${index}: ${value}`);
+        logObject(value);
+      });
+    }
+  }
+  
+
+
 function space_trade(){     //https://api.spacetraders.io/game/leaderboard/net-worth
     fetch("https://api.spacetraders.io/game/status")
     .then((res)=> res.json())
@@ -204,8 +220,33 @@ async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     console.log(response);
     resp_obj = await response.json();
     display_loan(resp_obj);
+    logObject(resp_obj);
     
 }
+
+// TAKE OUT LOAN 
+
+async function take_loan(token){
+    const authorization = `Bearer ${token}`;
+    const response_object = await fetch("https://api.spacetraders.io/my/loans",{
+        method: "POST",
+        headers: {
+            'Authorization': authorization,
+            'Content-Type': 'application/json'
+            },
+        body: JSON.stringify({type: "STARTUP"})
+        
+        });
+    
+    console.log(response_object);
+    const data = await response_object.json();
+    console.log(data);
+    create_table(data);
+
+
+}
+
+
 
 
 
@@ -221,7 +262,7 @@ loanb.addEventListener("click", ()=>{
     console.log(token_div.innerText);
     check_loans(login_token);
     token_div.scrollTop = token_div.scrollHeight;
-    
+
 });
 
 const sb = document.getElementById("space_button");
@@ -259,3 +300,7 @@ input_button.addEventListener('click', (e)=>{
     user_name.value="";
 });
 
+const take_loan_btn = document.getElementById("take_loan");
+take_loan_btn.addEventListener("click", ()=>{
+    take_loan(login_token);
+})
