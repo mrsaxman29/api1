@@ -106,7 +106,7 @@ const ui_logged_in = document.getElementById("ui_wrapper_logged_in");
 const ui_wrapper = document.getElementById("ui_wrapper");
 
 
-// used for login
+// LOGIN
 async function check_account(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     const response = await fetch('https://api.spacetraders.io/my/account', {
         headers: {
@@ -124,7 +124,35 @@ async function check_account(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     
     }
 }
-//api.spacetraders.io/types/loans
+
+function display_loan(object){
+    console.log(object);
+    for (let index in object.loans){
+        //console.log(`ZZ: ${Object.entries(object.loans[index])}`);
+        var new_table = document.createElement("table");
+        var new_row = new_table.insertRow();
+        var second_row = new_table.insertRow();
+        
+        var obj_keys = Object.keys(object.loans[index]);
+        var obj_values = Object.values(object.loans[index]);
+
+        for (key in obj_keys){
+            var cell = new_row.insertCell();
+            cell.innerHTML = obj_keys[key];
+            cell.style.border = '1px solid black';
+
+            var cell2 = second_row.insertCell();
+            cell2.innerHTML = obj_values[key];
+            cell2.style.border = '1px solid black';
+
+        }
+        //new_div.innerHTML = Object.entries( object.loans[index]);
+        token_div.appendChild(new_table);
+    }
+}
+
+
+// CHECK LOANS
 async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     const credentials = `Bearer ${tk}`;
     console.log(credentials);
@@ -134,12 +162,17 @@ async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
         }
     });
     console.log(response);
-    stuff = await response.json();
-    console.log(stuff);
-    var new_div = document.createElement("div");
-    new_div.innerHTML = Object.entries( stuff.loans[0]);
-    token_div.appendChild(new_div);
+    resp_obj = await response.json();
+    display_loan(resp_obj);
+    
 }
+
+
+
+
+/// DEFINING DOM OBJECTS AND ADDING EVENT LISTENERS 
+
+
 
 var login_token = '';
 
@@ -162,14 +195,10 @@ login_btn.addEventListener("click", (e)=>{
     check_account(login_field.value);
     login_token = login_field.value;
     login_field.value="";
-    
-
 })
 
 const check_btn = document.getElementById("check");
 check_btn.addEventListener("click", check_account);
-
-
 
 const token_div = document.getElementById("token");
 const input_button = document.getElementById("submit");

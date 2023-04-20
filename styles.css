@@ -2,6 +2,7 @@ html body{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    background-color: black;
 }
 
 .wrapper{
@@ -38,7 +39,7 @@ html body{
 }
 
 #space_button{
-    font-size: x-large;
+    font-size: large;
 }
 
 #token{
