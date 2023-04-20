@@ -11,6 +11,7 @@ html body{
     flex-direction: column;
     align-items: center;
     padding: 10px;
+
     
 }
 
@@ -43,9 +44,14 @@ html body{
 }
 
 #token{
-    height: 20vh;
-    width: 50vw;
+    height: 40vh;
+    width: 75vw;
     background-color: deepskyblue;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    padding-bottom: 80px;
+    
 }
 
 #ui_wrapper{
@@ -61,3 +67,4 @@ html body{
 .inactive{
     display: none;
 }
+

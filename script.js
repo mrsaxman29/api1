@@ -75,10 +75,22 @@ var data = {
 
 
 
+
+
+
+
+
+
+
+
 // SPACE TRADERS
 
 
 
+
+
+
+//token: b1e819b4-1fc6-48e5-9ca7-e7cb741f0bae    un: playerzero
 
 
 function space_trade(){     //https://api.spacetraders.io/game/leaderboard/net-worth
@@ -99,6 +111,7 @@ function new_user(un){
     .then((data)=>{
         console.log(data);
         token_div.innerText=data.token;
+        
     });
 }
 
@@ -108,9 +121,11 @@ const ui_wrapper = document.getElementById("ui_wrapper");
 
 // LOGIN
 async function check_account(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
+    const credentials = `Bearer ${tk}`;
+    console.log(credentials);
     const response = await fetch('https://api.spacetraders.io/my/account', {
         headers: {
-            'Authorization': "Bearer bbd8ceea-4436-4b90-9fc2-dadab58e5551",
+            'Authorization': credentials,
         }
 })
     console.log(response);
@@ -121,8 +136,33 @@ async function check_account(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
         ui_wrapper.classList.add("inactive");
         ui_logged_in.classList.remove("inactive");
         ui_logged_in.classList.add("active");
-    
     }
+    var user = stuff.user;
+    console.log(user);
+    create_table(user);
+}
+
+function create_table(object){
+    var new_table = document.createElement("table");
+    var new_row = new_table.insertRow();
+    var second_row = new_table.insertRow();
+    var obj_keys = Object.keys(object);
+    var obj_values = Object.values(object);
+
+    for (key in obj_keys){
+        var cell = new_row.insertCell();
+        cell.innerHTML = obj_keys[key];
+        cell.style.border = '1px solid black';
+        cell.style.fontSize = "large";
+
+        var cell2 = second_row.insertCell();
+        cell2.innerHTML = obj_values[key];
+        
+
+    }
+    token_div.appendChild(new_table);
+
+
 }
 
 function display_loan(object){
@@ -132,7 +172,6 @@ function display_loan(object){
         var new_table = document.createElement("table");
         var new_row = new_table.insertRow();
         var second_row = new_table.insertRow();
-        
         var obj_keys = Object.keys(object.loans[index]);
         var obj_values = Object.values(object.loans[index]);
 
@@ -140,10 +179,11 @@ function display_loan(object){
             var cell = new_row.insertCell();
             cell.innerHTML = obj_keys[key];
             cell.style.border = '1px solid black';
+            cell.style.fontSize = "large";
 
             var cell2 = second_row.insertCell();
             cell2.innerHTML = obj_values[key];
-            cell2.style.border = '1px solid black';
+            
 
         }
         //new_div.innerHTML = Object.entries( object.loans[index]);
@@ -180,6 +220,8 @@ const loanb = document.getElementById("loans");
 loanb.addEventListener("click", ()=>{
     console.log(token_div.innerText);
     check_loans(login_token);
+    token_div.scrollTop = token_div.scrollHeight;
+    
 });
 
 const sb = document.getElementById("space_button");
@@ -198,7 +240,10 @@ login_btn.addEventListener("click", (e)=>{
 })
 
 const check_btn = document.getElementById("check");
-check_btn.addEventListener("click", check_account);
+check_btn.addEventListener("click", ()=>{
+    check_account(login_token);
+    token_div.scrollTop = token_div.scrollHeight;
+});
 
 const token_div = document.getElementById("token");
 const input_button = document.getElementById("submit");
