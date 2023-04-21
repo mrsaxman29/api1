@@ -95,18 +95,32 @@ var data = {
 
 function logObject(obj) {
     if (obj instanceof Object) {
-      Object.entries(obj).forEach(([key, value]) => {
-        console.log(`${key}: ${value}`);
-        logObject(value);
-      });
+        create_table(obj);
+        Object.entries(obj).forEach(([key, value]) => {
+            console.log(`${key}: ${value} type: ${typeof(value)}`);
+            logObject(value);
+        });
     } else if (Array.isArray(obj)) {
-      obj.forEach((value, index) => {
-        console.log(`${index}: ${value}`);
-        logObject(value);
-      });
+        create_table(obj);
+        obj.forEach((value, index) => {
+            console.log(`${index}: ${value}`);
+            logObject(value);
+        });
     }
   }
   
+async function view_ships(token){
+    var credentials = `Bearer ${token}`
+    var response = await fetch('api.spacetraders.io/systems/OE/ship-listings', {
+        headers: {
+            'Authorization': credentials
+        }
+    })
+
+    var data = await response.json();
+    logObject(data);
+
+}
 
 
 function space_trade(){     //https://api.spacetraders.io/game/leaderboard/net-worth
@@ -219,7 +233,7 @@ async function check_loans(tk = 'bbd8ceea-4436-4b90-9fc2-dadab58e5551'){
     });
     console.log(response);
     resp_obj = await response.json();
-    display_loan(resp_obj);
+    //display_loan(resp_obj);
     logObject(resp_obj);
     
 }
@@ -253,9 +267,13 @@ async function take_loan(token){
 
 /// DEFINING DOM OBJECTS AND ADDING EVENT LISTENERS 
 
-
-
 var login_token = '';
+
+const ship_btn = document.getElementById('ships');
+ship_btn.addEventListener('click', ()=>{
+    console.log("CHECKING SHIPS");
+    view_ships(login_token);
+});
 
 const loanb = document.getElementById("loans");
 loanb.addEventListener("click", ()=>{
